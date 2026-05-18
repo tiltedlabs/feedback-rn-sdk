@@ -1,0 +1,58 @@
+{
+  "name": "@tiltedlabs/feedback-rn",
+  "version": "0.1.1",
+  "description": "Feedback mobile TiltedOS (capture OS + snapshot + envoi multipart)",
+  "license": "MIT",
+  "main": "src/index.ts",
+  "types": "src/index.ts",
+  "exports": {
+    ".": {
+      "types": "./src/index.ts",
+      "default": "./src/index.ts"
+    }
+  },
+  "files": [
+    "src",
+    "README.md"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tiltedlabs/feedback-rn-sdk.git"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/",
+    "access": "public"
+  },
+  "scripts": {
+    "check-types": "tsc --noEmit",
+    "prepublishOnly": "pnpm run check-types"
+  },
+  "dependencies": {
+    "expo-screen-capture": "~8.0.9",
+    "expo-sensors": "~14.1.4",
+    "react-native-view-shot": "^4.0.0"
+  },
+  "peerDependencies": {
+    "expo": ">=51",
+    "expo-constants": "*",
+    "expo-image-manipulator": "*",
+    "react": ">=18",
+    "react-native": ">=0.73",
+    "react-native-screens": ">=4.0.0"
+  },
+  "peerDependenciesMeta": {
+    "expo-constants": {
+      "optional": true
+    }
+  },
+  "devDependencies": {
+    "@types/react": "^19.2.14",
+    "expo-image-manipulator": "~14.0.8",
+    "expo-screen-capture": "~8.0.9",
+    "expo-sensors": "~14.1.4",
+    "react": "^18.3.1",
+    "react-native": "^0.76.0",
+    "react-native-screens": "^4.16.0",
+    "typescript": "5.9.3"
+  }
+}
