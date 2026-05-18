@@ -1,7 +1,7 @@
 import { MOBILE_FEEDBACK_PATH, TILTEDOS_API_BASE_URL } from './config'
 import type { MobileFeedbackPriority } from './priorities'
 
-export interface SubmitMobileFeedbackParams {
+interface SubmitMobileFeedbackParams {
   readonly apiKey: string
   readonly description: string
   readonly imageUri: string
@@ -9,6 +9,8 @@ export interface SubmitMobileFeedbackParams {
   readonly platform?: string
   readonly appVersion?: string
   readonly buildNumber?: string
+  /** Métadonnées injectées dans la description côté serveur (user id, email, etc.). */
+  readonly context?: Record<string, string>
 }
 
 export async function submitMobileFeedback(
@@ -23,6 +25,9 @@ export async function submitMobileFeedback(
   if (params.platform) form.append('platform', params.platform)
   if (params.appVersion) form.append('appVersion', params.appVersion)
   if (params.buildNumber) form.append('buildNumber', params.buildNumber)
+  if (params.context && Object.keys(params.context).length > 0) {
+    form.append('context', JSON.stringify(params.context))
+  }
   form.append('screenshot', {
     uri: params.imageUri,
     name: 'screenshot.jpg',

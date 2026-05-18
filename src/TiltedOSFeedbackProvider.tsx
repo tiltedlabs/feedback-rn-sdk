@@ -9,7 +9,13 @@ import {
 } from 'react-native'
 
 import { submitMobileFeedback } from './api'
+import {
+  type FeedbackContextInput,
+  resolveFeedbackContext,
+} from './resolve-context'
 import { captureFeedbackScreenshot } from './feedback-capture'
+
+export type { FeedbackContextInput }
 import { FeedbackSheet } from './feedback-sheet'
 import {
   DEFAULT_MOBILE_FEEDBACK_PRIORITY,
@@ -20,11 +26,13 @@ import { subscribeShake } from './shake-listener'
 export interface TiltedOSFeedbackProviderProps {
   readonly apiKey: string
   readonly children: React.ReactNode
+  readonly context?: FeedbackContextInput
 }
 
 export const TiltedOSFeedbackProvider = ({
   apiKey,
   children,
+  context,
 }: TiltedOSFeedbackProviderProps) => {
   const [open, setOpen] = useState(false)
   const [previewUri, setPreviewUri] = useState<string | null>(null)
@@ -121,6 +129,7 @@ export const TiltedOSFeedbackProvider = ({
         platform: Platform.OS,
         appVersion: appVersion || undefined,
         buildNumber: buildNumber || undefined,
+        context: resolveFeedbackContext(context),
       })
       Alert.alert('Merci', 'Le feedback a été envoyé.')
       reset()
