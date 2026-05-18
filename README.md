@@ -8,7 +8,7 @@ SDK Expo / React Native pour envoyer du feedback (capture d’écran, shake) ver
 pnpm add @tiltedlabs/feedback-rn
 ```
 
-App hôte : Expo SDK ≥ 51, `expo-image-manipulator`, `react-native-screens` (inclus avec Expo Router), development build recommandé.
+App hôte : Expo SDK ≥ 51, `react-native-screens` (inclus avec Expo Router), development build recommandé.
 
 Monte le provider **à la racine** de l’app (au-dessus du `NavigationContainer` / layout racine) pour que le feedback s’affiche par-dessus les modales natives.
 

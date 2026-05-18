@@ -27,9 +27,6 @@ importers:
       '@types/react':
         specifier: ^19.2.14
         version: 19.2.14
-      expo-image-manipulator:
-        specifier: ~14.0.8
-        version: 14.0.8(expo@55.0.24)
       react:
         specifier: ^18.3.1
         version: 18.3.1
@@ -1624,16 +1621,6 @@ packages:
       expo: '*'
       react: '*'
       react-native: '*'
-
-  expo-image-loader@6.0.0:
-    resolution: {integrity: sha512-nKs/xnOGw6ACb4g26xceBD57FKLFkSwEUTDXEDF3Gtcu3MqF3ZIYd3YM+sSb1/z9AKV1dYT7rMSGVNgsveXLIQ==}
-    peerDependencies:
-      expo: '*'
-
-  expo-image-manipulator@14.0.8:
-    resolution: {integrity: sha512-sXsXjm7rIxLWZe0j2A41J/Ph53PpFJRdyzJ3EQ/qetxLUvS2m3K1sP5xy37px43qCf0l79N/i6XgFgenFV36/Q==}
-    peerDependencies:
-      expo: '*'
 
   expo-keep-awake@55.0.8:
     resolution: {integrity: sha512-PfIpMfM+STOBwkR5XOE+yVtER86c44MD+W8QD8JxuO0sT9pF7Y1SJYakWlpvX8xsGA+bjKLxftm9403s9kQhKA==}
@@ -5167,15 +5154,6 @@ snapshots:
       fontfaceobserver: 2.3.0
       react: 18.3.1
       react-native: 0.76.9(@babel/core@7.29.0)(@babel/preset-env@7.29.5(@babel/core@7.29.0))(@types/react@19.2.14)(react@18.3.1)
-
-  expo-image-loader@6.0.0(expo@55.0.24):
-    dependencies:
-      expo: 55.0.24(@babel/core@7.29.0)(@expo/dom-webview@55.0.6)(react-native@0.76.9(@babel/core@7.29.0)(@babel/preset-env@7.29.5(@babel/core@7.29.0))(@types/react@19.2.14)(react@18.3.1))(react@18.3.1)(typescript@5.9.3)
-
-  expo-image-manipulator@14.0.8(expo@55.0.24):
-    dependencies:
-      expo: 55.0.24(@babel/core@7.29.0)(@expo/dom-webview@55.0.6)(react-native@0.76.9(@babel/core@7.29.0)(@babel/preset-env@7.29.5(@babel/core@7.29.0))(@types/react@19.2.14)(react@18.3.1))(react@18.3.1)(typescript@5.9.3)
-      expo-image-loader: 6.0.0(expo@55.0.24)
 
   expo-keep-awake@55.0.8(expo@55.0.24)(react@18.3.1):
     dependencies:
