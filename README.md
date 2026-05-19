@@ -1,39 +1,50 @@
 # @tiltedlabs/feedback-rn
 
-SDK Expo / React Native pour envoyer du feedback (capture d’écran, shake) vers TiltedOS.
+Feedback mobile TiltedOS (Expo / React Native). Shake ou capture OS → sheet → envoi multipart vers TiltedOS.
 
-## Installation
+## Install
 
 ```bash
 pnpm add @tiltedlabs/feedback-rn
 ```
 
-App hôte : Expo SDK ≥ 51, `react-native-screens` (inclus avec Expo Router), development build recommandé.
-
-Monte le provider **à la racine** de l’app (au-dessus du `NavigationContainer` / layout racine) pour que le feedback s’affiche par-dessus les modales natives.
-
 ## Usage
 
 ```tsx
-import { TiltedOSFeedbackProvider } from '@tiltedlabs/feedback-rn';
+import { TiltedOSFeedbackProvider } from '@tiltedlabs/feedback-rn'
 
 <TiltedOSFeedbackProvider apiKey={process.env.EXPO_PUBLIC_TILTEDOS_FEEDBACK_KEY!}>
-  {children}
+  <App />
 </TiltedOSFeedbackProvider>
 ```
 
-### Contexte utilisateur (user id, email, …)
+### Locale (`fr` | `en`)
 
-`context` injecte des paires clé/valeur dans la description de la tâche TiltedOS (bloc **Contexte**), sans les afficher dans le champ saisi :
+Par défaut l’UI est en français. Passe `locale="en"` pour l’anglais :
 
 ```tsx
 <TiltedOSFeedbackProvider
   apiKey={process.env.EXPO_PUBLIC_TILTEDOS_FEEDBACK_KEY!}
-  context={() => ({
-    'User ID': session.user.id,
-    Email: session.user.email ?? '',
-  })}
+  locale="en"
 >
-  {children}
+  <App />
+</TiltedOSFeedbackProvider>
+```
+
+### Niveau de gêne (champ `priority`)
+
+La sheet demande **l’impact pour l’utilisateur** avec quatre niveaux (`Pas trop`, `Pas mal`, `Beaucoup`, `Énormément`).  
+Côté API, ces choix sont envoyés dans le champ multipart existant `priority` (`low` | `medium` | `high` | `critical`).
+
+### Contexte utilisateur
+
+`context` injecte des métadonnées (user id, email, …) dans la description de la tâche côté serveur :
+
+```tsx
+<TiltedOSFeedbackProvider
+  apiKey={key}
+  context={() => ({ 'User ID': user.id, Email: user.email ?? '' })}
+>
+  <App />
 </TiltedOSFeedbackProvider>
 ```

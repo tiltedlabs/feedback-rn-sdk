@@ -1,5 +1,5 @@
 import * as ScreenCapture from 'expo-screen-capture'
-import React, { useCallback, useEffect, useRef, useState } from 'react'
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import {
   Alert,
   Keyboard,
@@ -14,26 +14,36 @@ import {
   resolveFeedbackContext,
 } from './resolve-context'
 import { captureFeedbackScreenshot } from './feedback-capture'
-
-export type { FeedbackContextInput }
+import { FeedbackMessagesProvider } from './feedback-messages-context'
 import { FeedbackSheet } from './feedback-sheet'
+import { getFeedbackMessages, type FeedbackLocale } from './i18n'
 import {
   DEFAULT_MOBILE_FEEDBACK_PRIORITY,
   type MobileFeedbackPriority,
 } from './priorities'
 import { subscribeShake } from './shake-listener'
 
+export type { FeedbackContextInput, FeedbackLocale }
+
 export interface TiltedOSFeedbackProviderProps {
   readonly apiKey: string
   readonly children: React.ReactNode
   readonly context?: FeedbackContextInput
+  /** Langue de l’UI du widget (`fr` par défaut). */
+  readonly locale?: FeedbackLocale
 }
 
 export const TiltedOSFeedbackProvider = ({
   apiKey,
   children,
   context,
+  locale,
 }: TiltedOSFeedbackProviderProps) => {
+  const messages = useMemo(() => getFeedbackMessages(locale), [locale])
+  const messagesCtx = useMemo(
+    () => ({ locale: locale === 'en' ? ('en' as const) : ('fr' as const), messages }),
+    [locale, messages],
+  )
   const [open, setOpen] = useState(false)
   const [previewUri, setPreviewUri] = useState<string | null>(null)
   const [description, setDescription] = useState('')
@@ -68,11 +78,11 @@ export const TiltedOSFeedbackProvider = ({
       setOpen(true)
     } catch (e) {
       Alert.alert(
-        'Capture',
-        e instanceof Error ? e.message : 'Impossible de capturer la vue',
+        messages.captureTitle,
+        e instanceof Error ? e.message : messages.captureFailed,
       )
     }
-  }, [])
+  }, [messages.captureFailed, messages.captureTitle])
 
   useEffect(() => {
     const screenshotSub = ScreenCapture.addScreenshotListener(() => {
@@ -99,7 +109,7 @@ export const TiltedOSFeedbackProvider = ({
   const onSubmit = async () => {
     const desc = description.trim()
     if (desc.length < 3) {
-      Alert.alert('Description', 'Décris le problème (au moins 3 caractères).')
+      Alert.alert(messages.descriptionAlertTitle, messages.descriptionMinLength)
       return
     }
     if (!previewUri) {
@@ -131,12 +141,12 @@ export const TiltedOSFeedbackProvider = ({
         buildNumber: buildNumber || undefined,
         context: resolveFeedbackContext(context),
       })
-      Alert.alert('Merci', 'Le feedback a été envoyé.')
+      Alert.alert(messages.thankYouTitle, messages.thankYouMessage)
       reset()
     } catch (e) {
       Alert.alert(
-        'Envoi',
-        e instanceof Error ? e.message : "Impossible d'envoyer le feedback",
+        messages.submitAlertTitle,
+        e instanceof Error ? e.message : messages.submitFailed,
       )
     } finally {
       setSubmitting(false)
@@ -144,7 +154,7 @@ export const TiltedOSFeedbackProvider = ({
   }
 
   return (
-    <>
+    <FeedbackMessagesProvider value={messagesCtx}>
       {children}
       <FeedbackSheet
         visible={open}
@@ -159,6 +169,6 @@ export const TiltedOSFeedbackProvider = ({
         scrollRef={scrollRef}
         descriptionInputRef={descriptionInputRef}
       />
-    </>
+    </FeedbackMessagesProvider>
   )
 }

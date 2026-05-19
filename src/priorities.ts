@@ -36,14 +36,4 @@ export const MOBILE_FEEDBACK_PRIORITY_STYLES: Record<
   },
 }
 
-export const MOBILE_FEEDBACK_PRIORITIES: readonly {
-  readonly value: MobileFeedbackPriority
-  readonly label: string
-}[] = [
-  { value: 'low', label: 'Basse' },
-  { value: 'medium', label: 'Normale' },
-  { value: 'high', label: 'Haute' },
-  { value: 'critical', label: 'Critique' },
-] as const
-
 export const DEFAULT_MOBILE_FEEDBACK_PRIORITY: MobileFeedbackPriority = 'medium'

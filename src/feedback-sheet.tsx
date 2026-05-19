@@ -13,13 +13,11 @@ import {
   View,
 } from 'react-native'
 
+import { useFeedbackMessages } from './feedback-messages-context'
 import { FeedbackOverlay } from './feedback-overlay'
 import { feedbackSheetColors, feedbackSheetStyles } from './feedback-sheet.styles'
-import {
-  MOBILE_FEEDBACK_PRIORITIES,
-  MOBILE_FEEDBACK_PRIORITY_STYLES,
-  type MobileFeedbackPriority,
-} from './priorities'
+import { getPriorityOptions } from './i18n'
+import { MOBILE_FEEDBACK_PRIORITY_STYLES, type MobileFeedbackPriority } from './priorities'
 
 export interface FeedbackSheetProps {
   readonly visible: boolean
@@ -48,6 +46,9 @@ export const FeedbackSheet = ({
   scrollRef,
   descriptionInputRef,
 }: FeedbackSheetProps) => {
+  const { messages } = useFeedbackMessages()
+  const priorityOptions = getPriorityOptions(messages)
+
   React.useEffect(() => {
     if (!visible || Platform.OS !== 'android') {
       return
@@ -74,11 +75,11 @@ export const FeedbackSheet = ({
             { color: feedbackSheetColors.title },
           ]}
         >
-          Envoyer un feedback
+          {messages.sheetTitle}
         </Text>
         <Pressable
           accessibilityRole="button"
-          accessibilityLabel="Fermer"
+          accessibilityLabel={messages.close}
           onPress={onClose}
           style={feedbackSheetStyles.closeButton}
         >
@@ -121,10 +122,10 @@ export const FeedbackSheet = ({
               { color: feedbackSheetColors.label },
             ]}
           >
-            Priorité
+            {messages.prioritySectionLabel}
           </Text>
           <View style={feedbackSheetStyles.priorityRow}>
-            {MOBILE_FEEDBACK_PRIORITIES.map((option) => {
+            {priorityOptions.map((option) => {
               const selected = priority === option.value
               const palette = MOBILE_FEEDBACK_PRIORITY_STYLES[option.value]
               return (
@@ -163,13 +164,13 @@ export const FeedbackSheet = ({
               { color: feedbackSheetColors.label },
             ]}
           >
-            Description
+            {messages.descriptionLabel}
           </Text>
           <TextInput
             ref={descriptionInputRef}
             value={description}
             onChangeText={onDescriptionChange}
-            placeholder="Qu’est-ce qui ne va pas ?"
+            placeholder={messages.descriptionPlaceholder}
             placeholderTextColor={feedbackSheetColors.placeholder}
             multiline
             textAlignVertical="top"
@@ -201,7 +202,7 @@ export const FeedbackSheet = ({
             {submitting ? (
               <ActivityIndicator color="#ffffff" />
             ) : (
-              <Text style={feedbackSheetStyles.submitButtonText}>Envoyer</Text>
+              <Text style={feedbackSheetStyles.submitButtonText}>{messages.submit}</Text>
             )}
           </Pressable>
         </View>
