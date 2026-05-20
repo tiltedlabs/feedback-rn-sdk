@@ -48,3 +48,17 @@ Côté API, ces choix sont envoyés dans le champ multipart existant `priority` 
   <App />
 </TiltedOSFeedbackProvider>
 ```
+
+### Sensibilité du shake
+
+Par défaut, le module se déclenche à partir d’une accélération totale de `2.2g`.
+Passe `shakeThreshold` pour ajuster la force nécessaire : plus la valeur est haute, plus il faut secouer fort.
+
+```tsx
+<TiltedOSFeedbackProvider
+  apiKey={key}
+  shakeThreshold={2.5}
+>
+  <App />
+</TiltedOSFeedbackProvider>
+```

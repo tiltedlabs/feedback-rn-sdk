@@ -2,14 +2,17 @@ import { Accelerometer } from 'expo-sensors'
 
 const SHAKE_UPDATE_INTERVAL_MS = 100
 /** Accélération totale (g) au-delà de laquelle on considère un shake. */
-const SHAKE_THRESHOLD = 1.78
+export const DEFAULT_SHAKE_THRESHOLD = 2.2
 const SHAKE_COOLDOWN_MS = 1_500
 
 /**
  * Détecte un shake via l’accéléromètre (ne fonctionne pas sur simulateur iOS).
  * Retourne une fonction de désabonnement.
  */
-export function subscribeShake(onShake: () => void): () => void {
+export function subscribeShake(
+  onShake: () => void,
+  threshold = DEFAULT_SHAKE_THRESHOLD,
+): () => void {
   let subscription: { remove: () => void } | null = null
   let lastShakeAt = 0
   let cancelled = false
@@ -22,7 +25,7 @@ export function subscribeShake(onShake: () => void): () => void {
     Accelerometer.setUpdateInterval(SHAKE_UPDATE_INTERVAL_MS)
     subscription = Accelerometer.addListener(({ x, y, z }) => {
       const acceleration = Math.sqrt(x * x + y * y + z * z)
-      if (acceleration < SHAKE_THRESHOLD) {
+      if (acceleration < threshold) {
         return
       }
       const now = Date.now()

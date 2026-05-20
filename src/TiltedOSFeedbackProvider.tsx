@@ -21,7 +21,7 @@ import {
   DEFAULT_MOBILE_FEEDBACK_PRIORITY,
   type MobileFeedbackPriority,
 } from './priorities'
-import { subscribeShake } from './shake-listener'
+import { DEFAULT_SHAKE_THRESHOLD, subscribeShake } from './shake-listener'
 
 export type { FeedbackContextInput, FeedbackLocale }
 
@@ -31,6 +31,8 @@ export interface TiltedOSFeedbackProviderProps {
   readonly context?: FeedbackContextInput
   /** Langue de l’UI du widget (`fr` par défaut). */
   readonly locale?: FeedbackLocale
+  /** Accélération totale (g) nécessaire pour déclencher le feedback via shake. */
+  readonly shakeThreshold?: number
 }
 
 export const TiltedOSFeedbackProvider = ({
@@ -38,6 +40,7 @@ export const TiltedOSFeedbackProvider = ({
   children,
   context,
   locale,
+  shakeThreshold = DEFAULT_SHAKE_THRESHOLD,
 }: TiltedOSFeedbackProviderProps) => {
   const messages = useMemo(() => getFeedbackMessages(locale), [locale])
   const messagesCtx = useMemo(
@@ -88,14 +91,17 @@ export const TiltedOSFeedbackProvider = ({
     const screenshotSub = ScreenCapture.addScreenshotListener(() => {
       void openFeedbackCapture()
     })
-    const removeShake = subscribeShake(() => {
-      void openFeedbackCapture()
-    })
+    const removeShake = subscribeShake(
+      () => {
+        void openFeedbackCapture()
+      },
+      shakeThreshold,
+    )
     return () => {
       screenshotSub.remove()
       removeShake()
     }
-  }, [openFeedbackCapture])
+  }, [openFeedbackCapture, shakeThreshold])
 
   useEffect(() => {
     if (!open) return
