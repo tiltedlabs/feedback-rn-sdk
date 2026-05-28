@@ -2,11 +2,85 @@
 
 Feedback mobile TiltedOS (Expo / React Native). Shake ou capture OS → sheet → envoi multipart vers TiltedOS.
 
-## Install
+## Prérequis
+
+- **Expo SDK ≥ 51** (managed workflow ou dev client)
+- Rebuild natif après install (`expo prebuild` / EAS) — modules natifs requis
+
+## Installation
+
+Le package suit le **modèle standard des libs Expo tierces** : le JS est publié sur npm, les modules **natifs** sont des **peer dependencies** installés par **ton** projet, aux versions compatibles avec **ton** SDK Expo (`npx expo install`).
+
+Une version de `@tiltedlabs/feedback-rn` fonctionne sur **plusieurs SDK Expo** (≥ 51) ; ce n’est pas une version du plugin par SDK.
+
+### 1. Installer le package
 
 ```bash
 pnpm add @tiltedlabs/feedback-rn
 ```
+
+### 2. Installer les peer dependencies (natif)
+
+Depuis la racine de **ton app Expo** (là où se trouve `package.json` + `expo`) :
+
+```bash
+npx expo install expo-sensors expo-screen-capture react-native-view-shot react-native-screens
+```
+
+| Module | Rôle |
+|--------|------|
+| `expo-sensors` | Détection shake (accéléromètre) |
+| `expo-screen-capture` | Écoute screenshot système → ouverture du feedback |
+| `react-native-view-shot` | Capture d’écran pour la pièce jointe |
+| `react-native-screens` | Overlay plein écran iOS (`FullWindowOverlay`) — souvent déjà présent avec `expo-router` |
+
+**Important :** utilise toujours `npx expo install`, pas `pnpm add expo-sensors@x.y.z`. Seul Expo résout la version exacte attendue par ton SDK (`bundledNativeModules.json`).
+
+Si pnpm signale des peer dependencies manquantes après l’étape 1, c’est normal : l’étape 2 les ajoute.
+
+### 3. Config plugin (obligatoire)
+
+Ajoute le plugin dans `app.config.js` ou `app.json` :
+
+```js
+export default {
+  expo: {
+    plugins: [
+      // … tes autres plugins (expo-router, etc.)
+      '@tiltedlabs/feedback-rn',
+    ],
+  },
+}
+```
+
+Le plugin enregistre `expo-sensors` avec `motionPermission: false` : le shake utilise l’accéléromètre **sans** la modale iOS « Mouvement et forme » (podomètre).
+
+### 4. Rebuild natif
+
+```bash
+npx expo prebuild --clean
+# ou relance un build EAS
+```
+
+### 5. Android — Play Store (si screenshot → feedback)
+
+`expo-screen-capture` peut déclarer des permissions liées aux médias sur certaines versions Android (`READ_MEDIA_IMAGES` sur API 33). Si tu gardes cette feature, déclare-la dans la Play Console (usage : feedback déclenché par screenshot utilisateur, pas parcours galerie).
+
+---
+
+## Mise à jour Expo SDK
+
+Lors d’un upgrade Expo (ex. 55 → 56) :
+
+```bash
+npx expo install expo-sensors expo-screen-capture react-native-view-shot react-native-screens
+pnpm update @tiltedlabs/feedback-rn
+npx expo prebuild --clean
+```
+
+Pas besoin d’attendre une nouvelle major du SDK feedback : les versions natives restent pilotées par **ton** SDK Expo.
+
+---
 
 ## Usage
 

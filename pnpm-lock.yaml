@@ -8,25 +8,22 @@ importers:
 
   .:
     dependencies:
-      expo:
-        specifier: '>=51'
-        version: 55.0.24(@babel/core@7.29.0)(@expo/dom-webview@55.0.6)(react-native@0.76.9(@babel/core@7.29.0)(@babel/preset-env@7.29.5(@babel/core@7.29.0))(@types/react@19.2.14)(react@18.3.1))(react@18.3.1)(typescript@5.9.3)
       expo-constants:
         specifier: '*'
         version: 55.0.16(expo@55.0.24)(react-native@0.76.9(@babel/core@7.29.0)(@babel/preset-env@7.29.5(@babel/core@7.29.0))(@types/react@19.2.14)(react@18.3.1))
-      expo-screen-capture:
-        specifier: ~8.0.9
-        version: 8.0.9(expo@55.0.24)(react@18.3.1)
-      expo-sensors:
-        specifier: ~14.1.4
-        version: 14.1.4(expo@55.0.24)(react-native@0.76.9(@babel/core@7.29.0)(@babel/preset-env@7.29.5(@babel/core@7.29.0))(@types/react@19.2.14)(react@18.3.1))
-      react-native-view-shot:
-        specifier: ^4.0.0
-        version: 4.0.3(react-native@0.76.9(@babel/core@7.29.0)(@babel/preset-env@7.29.5(@babel/core@7.29.0))(@types/react@19.2.14)(react@18.3.1))(react@18.3.1)
     devDependencies:
       '@types/react':
         specifier: ^19.2.14
         version: 19.2.14
+      expo:
+        specifier: ~55.0.23
+        version: 55.0.24(@babel/core@7.29.0)(@expo/dom-webview@55.0.6)(react-native@0.76.9(@babel/core@7.29.0)(@babel/preset-env@7.29.5(@babel/core@7.29.0))(@types/react@19.2.14)(react@18.3.1))(react@18.3.1)(typescript@5.9.3)
+      expo-screen-capture:
+        specifier: ~55.0.13
+        version: 55.0.14(expo@55.0.24)(react@18.3.1)
+      expo-sensors:
+        specifier: ~55.0.14
+        version: 55.0.15(expo@55.0.24)(react-native@0.76.9(@babel/core@7.29.0)(@babel/preset-env@7.29.5(@babel/core@7.29.0))(@types/react@19.2.14)(react@18.3.1))
       react:
         specifier: ^18.3.1
         version: 18.3.1
@@ -36,6 +33,9 @@ importers:
       react-native-screens:
         specifier: ^4.16.0
         version: 4.25.0(react-native@0.76.9(@babel/core@7.29.0)(@babel/preset-env@7.29.5(@babel/core@7.29.0))(@types/react@19.2.14)(react@18.3.1))(react@18.3.1)
+      react-native-view-shot:
+        specifier: ^4.0.3
+        version: 4.0.3(react-native@0.76.9(@babel/core@7.29.0)(@babel/preset-env@7.29.5(@babel/core@7.29.0))(@types/react@19.2.14)(react@18.3.1))(react@18.3.1)
       typescript:
         specifier: 5.9.3
         version: 5.9.3
@@ -1642,14 +1642,14 @@ packages:
       react-native-worklets:
         optional: true
 
-  expo-screen-capture@8.0.9:
-    resolution: {integrity: sha512-Xu3ZHlqxO2rEa/R5BOSyTBIJzgVA4sxzMf9jz03dSg5X/I9qwD984cSH9dABJY8NYLQmxKYUTN8jTbA9jzgcTw==}
+  expo-screen-capture@55.0.14:
+    resolution: {integrity: sha512-R9IcHvsl+sD7YAO9K1VDcu88MLJWJ+Z6IzJZP7ZX5470P6cvLWt54gNgCtNRG/nCUVY26bfHuE7rqQrOwtYHyw==}
     peerDependencies:
       expo: '*'
       react: '*'
 
-  expo-sensors@14.1.4:
-    resolution: {integrity: sha512-KHROi5C8dhXedMwx7fZ5eyv9p382F5XOIex4a+GpdOTL3OY4xyk08kt7x64FtMeeoT87gYD3mb9LrBpHyNubkg==}
+  expo-sensors@55.0.15:
+    resolution: {integrity: sha512-kQ4JsgnkM4niP5IHzC8cqs94Lngp9SIuKbaFI2rauXiON8iGndodUAl/Pccpe8W1UHS4NQu6kcrAOi0rpIiowg==}
     peerDependencies:
       expo: '*'
       react-native: '*'
@@ -5176,12 +5176,12 @@ snapshots:
       react: 18.3.1
       react-native: 0.76.9(@babel/core@7.29.0)(@babel/preset-env@7.29.5(@babel/core@7.29.0))(@types/react@19.2.14)(react@18.3.1)
 
-  expo-screen-capture@8.0.9(expo@55.0.24)(react@18.3.1):
+  expo-screen-capture@55.0.14(expo@55.0.24)(react@18.3.1):
     dependencies:
       expo: 55.0.24(@babel/core@7.29.0)(@expo/dom-webview@55.0.6)(react-native@0.76.9(@babel/core@7.29.0)(@babel/preset-env@7.29.5(@babel/core@7.29.0))(@types/react@19.2.14)(react@18.3.1))(react@18.3.1)(typescript@5.9.3)
       react: 18.3.1
 
-  expo-sensors@14.1.4(expo@55.0.24)(react-native@0.76.9(@babel/core@7.29.0)(@babel/preset-env@7.29.5(@babel/core@7.29.0))(@types/react@19.2.14)(react@18.3.1)):
+  expo-sensors@55.0.15(expo@55.0.24)(react-native@0.76.9(@babel/core@7.29.0)(@babel/preset-env@7.29.5(@babel/core@7.29.0))(@types/react@19.2.14)(react@18.3.1)):
     dependencies:
       expo: 55.0.24(@babel/core@7.29.0)(@expo/dom-webview@55.0.6)(react-native@0.76.9(@babel/core@7.29.0)(@babel/preset-env@7.29.5(@babel/core@7.29.0))(@types/react@19.2.14)(react@18.3.1))(react@18.3.1)(typescript@5.9.3)
       invariant: 2.2.4
