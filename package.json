@@ -1,6 +1,6 @@
 {
   "name": "@tiltedlabs/feedback-rn",
-  "version": "0.1.9",
+  "version": "0.1.10",
   "description": "Feedback mobile TiltedOS (capture OS + snapshot + envoi multipart)",
   "license": "MIT",
   "main": "./dist/index.js",
