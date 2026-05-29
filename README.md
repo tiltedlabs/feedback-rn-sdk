@@ -53,6 +53,8 @@ export default {
 }
 ```
 
+Expo résout `@tiltedlabs/feedback-rn` vers `app.plugin.js` à la racine du package (comme `expo-font`, `expo-sensors`, etc.).
+
 Le plugin enregistre `expo-sensors` avec `motionPermission: false` : le shake utilise l’accéléromètre **sans** la modale iOS « Mouvement et forme » (podomètre).
 
 ### 4. Rebuild natif
@@ -61,6 +63,8 @@ Le plugin enregistre `expo-sensors` avec `motionPermission: false` : le shake ut
 npx expo prebuild --clean
 # ou relance un build EAS
 ```
+
+> **Note (≤ 0.1.8)** : le champ `exports` du package masquait `app.plugin.js` — Expo ne pouvait pas le résoudre. Corrigé en **0.1.9+**. Mets à jour le package si tu vois `PLUGIN_NOT_FOUND` ou « plugin introuvable ».
 
 ### 5. Android — Play Store (si screenshot → feedback)
 
